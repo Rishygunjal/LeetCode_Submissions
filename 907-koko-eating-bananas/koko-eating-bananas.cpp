@@ -1,36 +1,48 @@
 class Solution {
 
-bool solve(vector<int>& piles, long long mid,int h){
-    long long ctr=0;
-    for(auto i: piles){
-        if(i%mid==0) ctr+=(i/mid);
-        else{
-            ctr+=(i/mid+1);
-        }
-    }
-    if(ctr<=h) return 1;
-    else return 0;
-}
+bool condition(int mid, vector<int> piles, int h){
+    // cout<<"mid"<<mid<<endl;
+    // vector<int> piles1=piles
+    long long noh=0,i=0,n=piles.size();
+    // while(i<n){
+    //     while(piles[i]>0){
+    //         piles[i]-=mid;
+    //         noh++;
+    //         // cout<<noh<<"noh"<<endl;
+    //         if(noh>h) return 0;
+    //     }
+    //     i++;
+    // }
+    // if(noh>h) return 0;
+    // return 1;
 
+
+    for (int p : piles)
+        noh += (p + mid - 1) / mid;
+        if(noh>h) return 0;
+    if(noh>h) return 0;
+    return 1;
+}
 
 public:
     int minEatingSpeed(vector<int>& piles, int h) {
-        long long r=0;
-        for(auto i:piles){
-            r = max(r,(long long)(i));
-        }
 
-        long long l=1;
-        while(l<r){
-            long long mid = l + (r-l)/2;
-            if(!solve(piles,mid,h)){
-                l = mid+1;
+        int hi=0,lo=0;
+        for(auto i:piles){
+            hi=max(hi,i);
+        }
+        hi++;
+
+        while(lo+1<hi){
+            int mid=lo+floor((hi-lo)/2);
+            // cout<<lo<<" "<<mid<<" "<<hi<<endl;
+            if(condition(mid,piles,h)){
+                hi=mid;
             }else{
-                r = mid;
+                lo=mid;
             }
         }
-        
-        return l;
-    
+
+        return hi;
     }
 };
