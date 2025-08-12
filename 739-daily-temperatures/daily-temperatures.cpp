@@ -8,10 +8,10 @@ public:
         ans.push_back(0);
 
     for(int i=n-2;i>=0;i--){
-        if(t[i]<t[i+1]){
-            ans.push_back(1);
-            st.push({t[i],i});
-        }else{
+        // if(t[i]<t[i+1]){
+        //     ans.push_back(1);
+        //     st.push({t[i],i});
+        // }else{
             while(!st.empty() && t[i]>=st.top().first){
                 st.pop();
             }
@@ -23,7 +23,7 @@ public:
                 ans.push_back(st.top().second-i);
                 st.push({t[i],i});
             }
-        }
+        // }
     }
     reverse(ans.begin(),ans.end());
     return ans;
