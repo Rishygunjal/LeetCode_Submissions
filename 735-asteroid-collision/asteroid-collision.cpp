@@ -2,37 +2,47 @@ class Solution {
 public:
     vector<int> asteroidCollision(vector<int>& asteroids) {
         stack<int> stk;
-        for(auto i:asteroids){
-            if(stk.empty()) stk.push(i);
-            else{
-                if(i>=0){
-                    stk.push(i);
-                }else{
-                    if(stk.top()<0) stk.push(i);
-                    else{
-                        bool b=0;
-                        while(!stk.empty()){
-                            if(stk.top()>=0){
-                                if(abs(stk.top())>abs(i)){
-                                    break;}
-                                else if(abs(stk.top())==abs(i)){
-                                    stk.pop();
-                                    break;
-                                }else{
-                                    stk.pop();
-                                    if(stk.empty()){
-                                        stk.push(i);
-                                        break;
-                                    }
-                                }
-                            }else{
-                                stk.push(i);
-                                break;
+        int i=0;
+        // vectot<int> ans;
+        // while(asteroids[i]<0){
+        //     ans.push_back(asteroids[i]);
+        //     i++;
+        // }
+
+        while(i<asteroids.size()){
+            int t = asteroids[i];
+            if(t>0){
+                stk.push(t);
+            }else{
+                if(stk.empty()){
+                    stk.push(t);
+                }
+                else{
+                    int k = stk.top();
+                    if(k<0){
+                        stk.push(t);
+                    }else{
+                        if(abs(t)<abs(k)){
+                        }else if(abs(k)==abs(t)){
+                            stk.pop();
+                        }else{
+                            while(stk.size()!=0 && stk.top()>0 && (abs(stk.top()) < abs(t)) ){
+                                stk.pop();
+                            }
+                            if(stk.empty()){
+                                stk.push(t);
+                            }else if(stk.top()<0){
+                                stk.push(t);
+                            }else if(  abs(stk.top()) == abs(t)  ) {
+                                stk.pop();
+                            }else if( abs(stk.top()) > abs(t) ){
+
                             }
                         }
                     }
                 }
             }
+            i++;
         }
 
         vector<int> ans;
